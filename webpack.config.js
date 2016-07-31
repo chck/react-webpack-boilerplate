@@ -1,9 +1,12 @@
-import path from 'path'
-import htmlWebpackPlugin from 'html-webpack-plugin';
-import merge from 'webpack-merge';
-import webpack from 'webpack';
+var path = require('path');
+var htmlWebpackPlugin = require('html-webpack-plugin');
+var merge = require('webpack-merge');
+var webpack = require('webpack');
+
 
 const TARGET = process.env.npm_lifecycle_event;
+
+process.env.BABEL_ENV = TARGET;
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -27,12 +30,14 @@ const common = {
   },
 
   module: {
-    loaders: {
-      //Babelローダー
-      test: /\.jsx?$/,
-      loaders: ['babel'],
-      include: PATHS.app
-    }
+    loaders: [
+      {
+        // Babelローダー
+        test: /\.jsx?$/,
+        loaders: ['babel'],
+        include: PATHS.app
+      }
+    ]
   },
 
   plugins: [
